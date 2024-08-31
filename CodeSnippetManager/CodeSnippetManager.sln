@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSnippetManager", "CodeSnippetManager\CodeSnippetManager\CodeSnippetManager.csproj", "{251D2D4A-A013-470A-B0BB-B09066708DB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeSnippetManager", "CodeSnippetManager\CodeSnippetManager\CodeSnippetManager.csproj", "{251D2D4A-A013-470A-B0BB-B09066708DB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSnippetManager.Client", "CodeSnippetManager\CodeSnippetManager.Client\CodeSnippetManager.Client.csproj", "{03515DF3-8756-4C0F-8C65-0CFF2C4141EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeSnippetManager.Client", "CodeSnippetManager\CodeSnippetManager.Client\CodeSnippetManager.Client.csproj", "{03515DF3-8756-4C0F-8C65-0CFF2C4141EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@ using CodeSnippetManager.Data;
 using CodeSnippetManager.Data.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using Models_Snippet = CodeSnippetManager.Data.Models.Snippet;
+using NuGet.Protocol;
 
 namespace CodeSnippetManager.Controllers
 {
@@ -30,13 +30,19 @@ namespace CodeSnippetManager.Controllers
         }
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromBody] int id)
         {
             var snippet = new Snippet() { Id = id };
             _context.Snippets.Attach(snippet);
             _context.Snippets.Remove(snippet);
             await _context.SaveChangesAsync();
             return Ok("Successfully Deleted");
+        }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _context.Snippets.ToListAsync());
         }
     }
 }
