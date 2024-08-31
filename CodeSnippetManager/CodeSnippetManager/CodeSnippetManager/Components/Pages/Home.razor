@@ -1,7 +1,26 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Code Snippet Manager</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Code Snippet Manager</h1>
+<button @onclick="ShowModal">Create Snippet</button>
 
-Welcome to your new app.
+<Popup IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
+    <h2>Hello, I'm a modal!</h2>
+    <p>Some more content here...</p>
+</Popup> 
+
+
+@code {
+    private bool isModalVisible = false;
+
+    private void ShowModal()
+    {
+        isModalVisible = true;
+    }
+
+    private void OnModalVisibilityChanged(bool visible)
+    {
+        isModalVisible = visible;
+    }
+}

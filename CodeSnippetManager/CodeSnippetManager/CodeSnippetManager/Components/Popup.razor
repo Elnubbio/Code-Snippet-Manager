@@ -1,0 +1,24 @@
+﻿ <!-- Popup.razor -->
+<div class="modal" style="@(IsVisible ? "display:block;" : "display:none;")">
+    <div class="modal-content">
+        <span class="close" @onclick="ClosePopup">&times;</span>
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private async Task ClosePopup()
+    {
+        IsVisible = false;
+        await IsVisibleChanged.InvokeAsync(IsVisible);
+    }
+}

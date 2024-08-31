@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeSnippetManager.Client")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45a3b197e43422591cd6f6264192716342408759")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeSnippetManager.Client")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeSnippetManager.Client")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

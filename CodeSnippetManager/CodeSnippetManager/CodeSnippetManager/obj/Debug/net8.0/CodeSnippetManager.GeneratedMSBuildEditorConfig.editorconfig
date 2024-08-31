@@ -34,6 +34,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Documents/GitHub/Code-Snippet-Manager/CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/Components/Popup.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQb3B1cC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Documents/GitHub/Code-Snippet-Manager/CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -45,7 +49,3 @@ build_metadata.AdditionalFiles.CssScope =
 [D:/Documents/GitHub/Code-Snippet-Manager/CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-zce3lbr6s2
-
-[D:/Documents/GitHub/Code-Snippet-Manager/CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/Components/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-nxv4exblgr
