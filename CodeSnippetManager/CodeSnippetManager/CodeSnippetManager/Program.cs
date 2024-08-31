@@ -17,7 +17,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorClient",
+        builder => builder
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowAnyOrigin());
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowBlazorClient");
 
 app.UseRouting();
 // Configure the HTTP request pipeline.

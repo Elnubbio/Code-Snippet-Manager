@@ -17,8 +17,12 @@ namespace CodeSnippetManager.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get([FromBody] Snippet snippet) 
+        public async Task<IActionResult> Get([FromBody] Snippet snippet) 
         {
+            snippet.VisitedCount = 1;
+            snippet.CreatedOn = DateTime.UtcNow;
+            await _context.Snippets.AddAsync(snippet);
+            await _context.SaveChangesAsync();
             return Ok(snippet.Content);
         }
 
