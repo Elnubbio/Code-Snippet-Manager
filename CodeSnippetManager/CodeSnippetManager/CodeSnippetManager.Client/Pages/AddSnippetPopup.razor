@@ -1,4 +1,5 @@
-﻿@rendermode InteractiveAuto
+﻿@inject HttpClient Http
+@rendermode InteractiveAuto
 
 <button @onclick="ShowModal">Create Snippet</button>
 
@@ -9,6 +10,14 @@
 </Modal>
 
 @code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetAsync("http://localhost:5194/api/Snippets");
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+    }
+
     private bool isModalVisible = false;
 
     private void ShowModal()
