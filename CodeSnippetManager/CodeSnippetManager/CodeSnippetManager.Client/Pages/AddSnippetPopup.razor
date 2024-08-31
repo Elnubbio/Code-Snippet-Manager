@@ -6,12 +6,19 @@
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Code:</h2>
     <textarea class="flex-grow-1"></textarea>
-    <button>Save Snippet</button>
+    <button @onclick="clicky">Save Snippet</button>
 </Modal>
 
 @code {
 
-    protected override async Task OnInitializedAsync()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     var response = await Http.GetAsync("http://localhost:5194/api/Snippets");
+    //     var content = await response.Content.ReadAsStringAsync();
+    //     Console.WriteLine(content);
+    // }
+
+    protected async Task clicky()
     {
         var response = await Http.GetAsync("http://localhost:5194/api/Snippets");
         var content = await response.Content.ReadAsStringAsync();

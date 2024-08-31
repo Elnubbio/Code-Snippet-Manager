@@ -15,9 +15,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
+app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -33,15 +35,13 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(CodeSnippetManager.Client._Imports).Assembly);
 
-app.UseRouting();
-
+app.UseAntiforgery();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
