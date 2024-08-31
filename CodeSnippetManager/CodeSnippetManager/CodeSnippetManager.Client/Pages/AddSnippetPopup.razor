@@ -1,26 +1,23 @@
 ﻿@inject HttpClient Http
 @rendermode InteractiveAuto
 
+@using CodeSnippetManager.Data.Models
+
 <button @onclick="ShowModal">Create Snippet</button>
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Code:</h2>
-    <textarea class="flex-grow-1"></textarea>
+    <textarea @bind="SnippetText" class="flex-grow-1"></textarea>
     <button @onclick="clicky">Save Snippet</button>
 </Modal>
 
 @code {
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     var response = await Http.GetAsync("http://localhost:5194/api/Snippets");
-    //     var content = await response.Content.ReadAsStringAsync();
-    //     Console.WriteLine(content);
-    // }
-
+    public string SnippetText = "";
     protected async Task clicky()
     {
-        var response = await Http.GetAsync("http://localhost:5194/api/Snippets");
+        Snippet snipTest = new() { Content = SnippetText };
+        var response = await Http.PostAsJsonAsync("http://localhost:5194/api/Snippets", snipTest);
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CodeSnippetManager.Data;
+using CodeSnippetManager.Data.Models;
 
 namespace CodeSnippetManager.Controllers
 {
@@ -15,10 +16,10 @@ namespace CodeSnippetManager.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Get() 
+        [HttpPost]
+        public IActionResult Get([FromBody] Snippet snippet) 
         {
-            return Ok("Okay");
+            return Ok(snippet.Content);
         }
 
     }
