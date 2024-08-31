@@ -3,9 +3,10 @@
 <button @onclick="ShowModal">Create Snippet</button>
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
-    <h2>Hello, I'm a modal!</h2>
-    <p>Some more content here...</p>
-</Modal> 
+    <h2>Code:</h2>
+    <textarea class="flex-grow-1"></textarea>
+    <button>Save Snippet</button>
+</Modal>
 
 @code {
     private bool isModalVisible = false;
