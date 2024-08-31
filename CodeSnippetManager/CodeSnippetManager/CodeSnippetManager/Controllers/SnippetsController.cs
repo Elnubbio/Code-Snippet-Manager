@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CodeSnippetManager.Data;
 using CodeSnippetManager.Data.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using Models_Snippet = CodeSnippetManager.Data.Models.Snippet;
 
 namespace CodeSnippetManager.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("Snippets")]
 
     public class SnippetsController : ControllerBase
     {
@@ -16,8 +19,8 @@ namespace CodeSnippetManager.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Get([FromBody] Snippet snippet) 
+        [HttpPost("Add")]
+        public async Task<IActionResult> Add([FromBody] Snippet snippet) 
         {
             snippet.VisitedCount = 1;
             snippet.CreatedOn = DateTime.UtcNow;
@@ -26,5 +29,14 @@ namespace CodeSnippetManager.Controllers
             return Ok(snippet.Content);
         }
 
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var snippet = new Snippet() { Id = id };
+            _context.Snippets.Attach(snippet);
+            _context.Snippets.Remove(snippet);
+            await _context.SaveChangesAsync();
+            return Ok("Successfully Deleted");
+        }
     }
 }

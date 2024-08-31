@@ -17,7 +17,7 @@
     protected async Task clicky()
     {
         Snippet snipTest = new() { Content = SnippetText };
-        var response = await Http.PostAsJsonAsync("http://localhost:5194/api/Snippets", snipTest);
+        var response = await Http.PostAsJsonAsync("http://localhost:5194/Snippets/Add", snipTest);
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
     }

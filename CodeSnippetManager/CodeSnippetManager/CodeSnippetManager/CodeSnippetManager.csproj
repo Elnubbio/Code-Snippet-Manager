@@ -19,4 +19,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Snippets\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Snippets\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Snippets\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Snippets\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Snippets\Index.cshtml" />
+  </ItemGroup>
+
 </Project>
