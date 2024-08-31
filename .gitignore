@@ -1,7 +1,6 @@
-
 /CodeSnippetManager/.vs
 /CodeSnippetManager/.idea/*
 /CodeSnippetManager/CodeSnippetManager/CodeSnippetManager.Client/bin/*
+/CodeSnippetManager/CodeSnippetManager/CodeSnippetManager.Client/obj/*
 /CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/obj/*
 /CodeSnippetManager/CodeSnippetManager/CodeSnippetManager/bin/*
-/CodeSnippetManager/CodeSnippetManager/*
