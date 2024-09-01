@@ -77,6 +77,13 @@ h1:focus {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    margin-left: auto;
+}
+
+.close-tag {
+    color: #aaa;
+    float: right;
+    font-weight: bold;
 }
 
 .close:hover,
@@ -85,14 +92,29 @@ h1:focus {
     text-decoration: none;
     cursor: pointer;
 }
+.close-tag:hover,
+.close-tag:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .tag-card{
-    border: 2px solid;
+    border: 1px solid;
     border-color: black;
     border-radius: 8px;
     padding: 0.4rem 0.8rem;
     transition: border-color 0.25s;
     width: 15rem;
     margin: 0.3rem;
-    cursor: pointer;
+}
+
+.snippet-card {
+    border: 1px solid;
+    border-color: black;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    transition: border-color 0.25s;
+    width: 15rem;
+    margin: 0.3rem;
 }

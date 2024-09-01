@@ -2,15 +2,16 @@
 @using System.Net.Http.Json
 @using CodeSnippetManager.Data.Models
 @inject IHttpClientFactory clientFactory
-<h3>SnippetGrid</h3>
 
+<div class="d-flex flex-wrap overflow-auto">
 @foreach (var snippet in listOfSnippets)
 {
-    <div>
-        <button @onclick="()=>DeleteSnippet(snippet.Id)">delete</button>
-        <label>@snippet.Content</label>
+    <div class="snippet-card m-3">
+            <span class="text-wrap flex-grow-1 text-break">@snippet.Content</span>
+        <span class="close-tag" style="float:right;" @onclick="()=>DeleteSnippet(snippet.Id)">&times;</span>
     </div>
 }
+</div>
 
 @code {
     protected override async Task OnInitializedAsync()

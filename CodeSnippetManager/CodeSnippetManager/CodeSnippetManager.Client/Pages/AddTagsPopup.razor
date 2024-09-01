@@ -2,25 +2,20 @@
 @inject IHttpClientFactory clientFactory
 @using CodeSnippetManager.Data.Models
 
-<button @onclick="ShowModal">Create Tag</button>
+<button class="btn-sm btn-outline-primary" @onclick="ShowModal">Create Tag</button>
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Tags:</h2>
-    @* <div>
-        <input type="text" placeholder="Tag Name..." @bind="NewTagName" />
-        <button @onclick="clicky" class="btn-sm btn-outline-primary">Add Tag</button>
-    </div> *@
-
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Tag Name..." aria-label="TagName" aria-describedby="button-addon2" @bind="NewTagName">
-        <button  @onclick="clicky" class="btn btn-outline-secondary" type="button" id="button-addon2">Add Tag</button>
+        <button @onclick="addTag" class="btn btn-outline-primary" type="button" id="button-addon2">Add Tag</button>
     </div>
     <div class="d-flex flex-wrap overflow-auto">
             @foreach (var tag in Tags)
             {
                 <div class="tag-card m-3">
-                    <label class="flex-grow-1">@tag.Name</label>
-                    <button @onclick="()=>DeleteTag(tag.Id)" class="btn-sm">X</button>
+                <span class="flex-grow-1">@tag.Name</span>
+                <span class="close-tag" @onclick="()=>DeleteTag(tag.Id)">&times;</span>
                 </div>
             }
     </div>
@@ -35,7 +30,7 @@
     }
 
 
-    protected async Task clicky()
+    protected async Task addTag()
     {
         Tag newTag = new() { Name = NewTagName};
         var client = clientFactory.CreateClient();
@@ -43,6 +38,7 @@
         request.Content = JsonContent.Create(newTag);
         var response = await client.SendAsync(request);
         var content = await response.Content.ReadAsStringAsync();
+        await refreshTags();
         Console.WriteLine(content);
     }
 

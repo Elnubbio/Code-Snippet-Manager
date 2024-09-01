@@ -2,13 +2,13 @@
 @inject IHttpClientFactory clientFactory
 @using CodeSnippetManager.Data.Models
 
-<button @onclick="ShowModal">Create Snippet</button>
+<button class="btn-sm btn-outline-primary" @onclick="ShowModal">Create Snippet</button>
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Code:</h2>
     <textarea @bind="SnippetText" class="flex-grow-1"></textarea>
-    <button @onclick="clicky">Save Snippet</button>
-    <button @onclick="clicky2">Snippets</button>
+    <button class="btn-sm btn-outline-primary" @onclick="clicky">Save Snippet</button>
+    <button class="btn-sm btn-outline-primary" @onclick="clicky2">Snippets</button>
 </Modal>
 
 @code {
