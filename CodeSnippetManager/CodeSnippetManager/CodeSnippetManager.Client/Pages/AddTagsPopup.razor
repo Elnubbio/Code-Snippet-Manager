@@ -8,6 +8,14 @@
     <h2>Tags:</h2>
     <button @onclick="clicky">Add Tag</button>
     <input type="text" placeholder="Tag Name..." @bind="NewTagName" />
+    <div class="flex-grow-1 overflow-auto">
+    @foreach (var tag in Tags)
+    {
+        <button @onclick="()=>DeleteTag(tag.Id)">Delete Tag</button>
+        <label>@tag.Name </label>
+        <br />
+    }
+    </div>
 </Modal>
 
 @code {
@@ -15,7 +23,7 @@
     public string NewTagName = "";
     protected override async Task OnInitializedAsync()
     {
-        await clicky2();
+        await refreshTags();
     }
 
 
@@ -30,7 +38,7 @@
         Console.WriteLine(content);
     }
 
-    protected async Task clicky2()
+    protected async Task refreshTags()
     {
         var client = clientFactory.CreateClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "Tags/GetAll");
@@ -41,6 +49,19 @@
             Console.WriteLine(tag.Name);
         }
     }
+
+
+    private async Task DeleteTag(int tagId)
+    {
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "Tags/Delete");
+        request.Content = JsonContent.Create(tagId);
+        var response = await client.SendAsync(request);
+        Console.WriteLine(response.Content);
+
+        await refreshTags();
+    }
+
 
     private bool isModalVisible = false;
 
