@@ -6,15 +6,23 @@
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Tags:</h2>
-    <button @onclick="clicky">Add Tag</button>
-    <input type="text" placeholder="Tag Name..." @bind="NewTagName" />
-    <div class="flex-grow-1 overflow-auto">
-    @foreach (var tag in Tags)
-    {
-        <button @onclick="()=>DeleteTag(tag.Id)">Delete Tag</button>
-        <label>@tag.Name </label>
-        <br />
-    }
+    @* <div>
+        <input type="text" placeholder="Tag Name..." @bind="NewTagName" />
+        <button @onclick="clicky" class="btn-sm btn-outline-primary">Add Tag</button>
+    </div> *@
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Tag Name..." aria-label="TagName" aria-describedby="button-addon2" @bind="NewTagName">
+        <button  @onclick="clicky" class="btn btn-outline-secondary" type="button" id="button-addon2">Add Tag</button>
+    </div>
+    <div class="d-flex flex-wrap overflow-auto">
+            @foreach (var tag in Tags)
+            {
+                <div class="tag-card m-3">
+                    <label class="flex-grow-1">@tag.Name</label>
+                    <button @onclick="()=>DeleteTag(tag.Id)" class="btn-sm">X</button>
+                </div>
+            }
     </div>
 </Modal>
 
