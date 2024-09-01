@@ -11,4 +11,5 @@ public class ApplicationDbContext : DbContext
 	}
 	
 	public DbSet<Snippet> Snippets { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 }
