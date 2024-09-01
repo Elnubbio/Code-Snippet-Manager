@@ -8,4 +8,5 @@ public class Snippet
 	public string Content { get; set; }
 	public int VisitedCount { get; set; }
 	public DateTime CreatedOn { get; set; }
+	public Tag Tag { get; set; }
 }
