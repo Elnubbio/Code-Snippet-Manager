@@ -1,6 +1,5 @@
-﻿@inject HttpClient Http
-@rendermode InteractiveAuto
-
+﻿@rendermode InteractiveAuto
+@inject IHttpClientFactory clientFactory
 @using CodeSnippetManager.Data.Models
 
 <button @onclick="ShowModal">Create Snippet</button>
@@ -18,14 +17,19 @@
     protected async Task clicky()
     {
         Snippet snipTest = new() { Content = SnippetText };
-        var response = await Http.PostAsJsonAsync("http://localhost:5194/Snippets/Add", snipTest);
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "Snippets/Add");
+        request.Content = JsonContent.Create(snipTest);
+        var response = await client.SendAsync(request);
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
     }
 
     protected async Task clicky2()
     {
-        var response = await Http.GetAsync("http://localhost:5194/Snippets/GetAll");
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "Snippets/GetAll");
+        var response = await client.SendAsync(request);
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
     }
