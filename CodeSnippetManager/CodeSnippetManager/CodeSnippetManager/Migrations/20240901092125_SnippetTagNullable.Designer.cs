@@ -4,6 +4,7 @@ using CodeSnippetManager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeSnippetManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240901092125_SnippetTagNullable")]
+    partial class SnippetTagNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,15 @@ namespace CodeSnippetManager.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("TagId")
+                        .HasColumnType("int");
+
                     b.Property<int>("VisitedCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("Snippets");
                 });
@@ -66,34 +74,13 @@ namespace CodeSnippetManager.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("SnippetTag", b =>
+            modelBuilder.Entity("CodeSnippetManager.Data.Models.Snippet", b =>
                 {
-                    b.Property<int>("SnippetsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("SnippetsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("SnippetTag");
-                });
-
-            modelBuilder.Entity("SnippetTag", b =>
-                {
-                    b.HasOne("CodeSnippetManager.Data.Models.Snippet", null)
+                    b.HasOne("CodeSnippetManager.Data.Models.Tag", "Tag")
                         .WithMany()
-                        .HasForeignKey("SnippetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TagId");
 
-                    b.HasOne("CodeSnippetManager.Data.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Tag");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,7 +9,13 @@ public class ApplicationDbContext : DbContext
 	{
 		
 	}
-	
-	public DbSet<Snippet> Snippets { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Snippet>()
+            .HasMany<Tag>(s => s.Tags)
+            .WithMany(t => t.Snippets);
+    }
+    public DbSet<Snippet> Snippets { get; set; }
     public DbSet<Tag> Tags { get; set; }
 }

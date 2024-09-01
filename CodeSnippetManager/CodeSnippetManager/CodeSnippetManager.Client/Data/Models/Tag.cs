@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; }    
         public string Colour { get; set; }
+        public IEnumerable<Snippet>? Snippets { get; set; }
     }
 }

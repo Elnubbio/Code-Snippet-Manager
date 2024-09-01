@@ -1,0 +1,56 @@
+﻿@rendermode InteractiveAuto
+@inject IHttpClientFactory clientFactory
+@using CodeSnippetManager.Data.Models
+
+<button @onclick="ShowModal">Create Tag</button>
+
+<Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
+    <h2>Tags:</h2>
+    <button @onclick="clicky">Add Tag</button>
+    <input type="text" placeholder="Tag Name..." @bind="NewTagName" />
+</Modal>
+
+@code {
+    public List<Tag> Tags = [];
+    public string NewTagName = "";
+    protected override async Task OnInitializedAsync()
+    {
+        await clicky2();
+    }
+
+
+    protected async Task clicky()
+    {
+        Tag newTag = new() { Name = NewTagName};
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Post, "Tags/Add");
+        request.Content = JsonContent.Create(newTag);
+        var response = await client.SendAsync(request);
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+    }
+
+    protected async Task clicky2()
+    {
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "Tags/GetAll");
+        var response = await client.SendAsync(request);
+        Tags = await response.Content.ReadFromJsonAsync<List<Tag>>();
+        foreach (var tag in Tags)
+        {
+            Console.WriteLine(tag.Name);
+        }
+    }
+
+    private bool isModalVisible = false;
+
+    private void ShowModal()
+    {
+        isModalVisible = true;
+    }
+
+    private void OnModalVisibilityChanged(bool visible)
+    {
+        isModalVisible = visible;
+    }
+}
