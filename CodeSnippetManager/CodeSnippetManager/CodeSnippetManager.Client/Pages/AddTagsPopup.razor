@@ -14,8 +14,16 @@
             @foreach (var tag in Tags)
             {
                 <div class="tag-card m-3">
-                <span class="flex-grow-1">@tag.Name</span>
-                <span class="close-tag" @onclick="()=>DeleteTag(tag.Id)">&times;</span>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-10 snippet-card-padding">
+                                <span class="text-wrap flex-grow-1 text-break">@tag.Name </span>
+                            </div>
+                            <div class="col-2 snippet-card-padding">
+                                <label class="close-tag" @onclick="()=>DeleteTag(tag.Id)">&times;</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             }
     </div>

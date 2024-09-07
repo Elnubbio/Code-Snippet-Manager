@@ -6,15 +6,41 @@
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
     <h2>Code:</h2>
-    <textarea @bind="SnippetText" class="flex-grow-1"></textarea>
-    <button class="btn-sm btn-outline-primary" @onclick="clicky">Save Snippet</button>
-    <button class="btn-sm btn-outline-primary" @onclick="clicky2">Snippets</button>
+    <div class="pm0">
+        <div class="row" >
+            <div class="col-10 d-flex">
+                <textarea @bind="SnippetText" class="" style="flex:1;"></textarea>
+            </div>
+            <div class="col-2 d-flex">
+                <Select class="selectpicker" multiple aria-label="multiple select example" style="flex:1;" @onchange="OnSelectionChanged">>
+                    @foreach (Tag tag in Tags)
+                    {
+                        @* <option @onclick="() => AddToTagList(tag)">@tag.Name</option> *@
+                        <option value="@tag.Name">@tag.Name</option>
+                    }
+                </Select>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+    <button class="btn-sm btn-outline-primary" @onclick="SaveSnippet">Save Snippet</button>
+    <button class="btn-sm btn-outline-primary" @onclick="GetSnippets">Snippets</button>
 </Modal>
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        await GetTags();
+    }
+
 
     public string SnippetText = "";
-    protected async Task clicky()
+    List<Tag> Tags = new List<Tag>();
+    List<string> SelectedTags = new List<string>();
+    protected async Task SaveSnippet()
     {
         Snippet snipTest = new() { Content = SnippetText };
         var client = clientFactory.CreateClient();
@@ -25,7 +51,38 @@
         Console.WriteLine(content);
     }
 
-    protected async Task clicky2()
+    protected async Task GetSnippets()
+    {
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "Snippets/GetAll");
+        var response = await client.SendAsync(request);
+        var content = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+    }
+    protected async Task GetTags()
+    {
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "Tags/GetAll");
+        var response = await client.SendAsync(request);
+        Tags = await response.Content.ReadFromJsonAsync<List<Tag>>();
+        foreach (var tag in Tags)
+        {
+            Console.WriteLine(tag.Name);
+        }
+    }
+
+    private void OnSelectionChanged(ChangeEventArgs e)
+    {
+        var selectedValues = ((IEnumerable<string>)e.Value).ToList();
+        SelectedTags = selectedValues;
+
+        foreach (string tagA in SelectedTags)
+        {
+            Console.WriteLine(tagA);
+        }
+    }
+
+    protected async Task AddTag()
     {
         var client = clientFactory.CreateClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "Snippets/GetAll");

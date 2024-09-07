@@ -113,8 +113,19 @@ h1:focus {
     border: 1px solid;
     border-color: black;
     border-radius: 8px;
-    padding: 0.4rem 0.8rem;
     transition: border-color 0.25s;
     width: 15rem;
     margin: 0.3rem;
+}
+
+.snippet-card-padding {
+    padding-right: 0.5rem !important;
+    padding-left: 0.5rem !important;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}
+
+.pm0 {
+    padding: 0;
+    margin: 0;
 }

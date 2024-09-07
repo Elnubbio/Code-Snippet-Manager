@@ -5,12 +5,20 @@
 
 <div class="d-flex flex-wrap overflow-auto">
 @foreach (var snippet in listOfSnippets)
-{
+{        
     <div class="snippet-card m-3">
-            <span class="text-wrap flex-grow-1 text-break">@snippet.Content</span>
-        <span class="close-tag" style="float:right;" @onclick="()=>DeleteSnippet(snippet.Id)">&times;</span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-10 snippet-card-padding">
+                        <span class="text-wrap flex-grow-1 text-break">@snippet.Content</span>
+                    </div>
+                    <div class="col-2 snippet-card-padding">
+                        <span class="close-tag" style="float:right;" @onclick="()=>DeleteSnippet(snippet.Id)">&times;</span>
+                    </div>
+                </div>
+            </div>
     </div>
-}
+            }
 </div>
 
 @code {
