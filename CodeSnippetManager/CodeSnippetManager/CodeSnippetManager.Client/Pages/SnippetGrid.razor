@@ -10,25 +10,46 @@
             <div class="container">
                 <div class="row">
                     <div class="col-10 snippet-card-padding">
-                        <span class="text-wrap flex-grow-1 text-break">@snippet.Content</span>
+                        <span class="text-wrap flex-grow-1 text-break">@snippet.Title</span>
                     </div>
                     <div class="col-2 snippet-card-padding">
                         <span class="close-tag" style="float:right;" @onclick="()=>DeleteSnippet(snippet.Id)">&times;</span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-10 snippet-card-padding">
+                        <span class="text-wrap flex-grow-1 text-break">
+                            @if (snippet.Tags is not null && snippet.Tags.Any())
+                            {
+                                <div class="tags-container">
+                                @foreach (var tag in snippet.Tags)
+                                {
+                                    <div class="tag">@tag.Name </div>
+                                }
+                                </div>
+                            }
+                        </span>
+                    </div>
+                </div>
             </div>
     </div>
-            }
+}
 </div>
 
 @code {
     protected override async Task OnInitializedAsync()
     {
         await RefreshSnippets();
+        foreach (var snip in listOfSnippets)
+        {
+            Console.WriteLine(snip);
+        }
     }
 
     List<Snippet> listOfSnippets { get; set; } = [];
-
+    
+    
+    
     private async Task DeleteSnippet(int snippetId)
     {
         var client = clientFactory.CreateClient();

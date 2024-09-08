@@ -4,7 +4,7 @@
 
 <button class="btn-sm btn-outline-primary" @onclick="ShowModal">Create Tag</button>
 
-<Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
+<Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged" OnModalClosed="OnModalClosed" OnModalOpened="OnModalOpened">
     <h2>Tags:</h2>
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Tag Name..." aria-label="TagName" aria-describedby="button-addon2" @bind="NewTagName">
@@ -85,5 +85,15 @@
     private void OnModalVisibilityChanged(bool visible)
     {
         isModalVisible = visible;
+    }
+
+    private async Task OnModalClosed()
+    {
+        await refreshTags();
+    }
+
+    private async Task OnModalOpened()
+    {
+        await refreshTags();
     }
 }

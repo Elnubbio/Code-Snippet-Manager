@@ -4,10 +4,13 @@
 
 <button class="btn-sm btn-outline-primary" @onclick="ShowModal">Create Snippet</button>
 
-<Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged">
+<Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged" OnModalOpened="OnModalOpened">
     <h2>Code:</h2>
     <div class="pm0">
-        <div class="row" >
+        <div class="row">
+            <div>
+                <textarea @bind="SnippetTitle"></textarea>
+            </div>
             <div class="col-10 d-flex">
                 <textarea @bind="SnippetText" class="" style="flex:1;"></textarea>
             </div>
@@ -24,8 +27,8 @@
     </div>
 
 
-    
 
+    
     <button class="btn-sm btn-outline-primary" @onclick="SaveSnippet">Save Snippet</button>
     <button class="btn-sm btn-outline-primary" @onclick="GetSnippets">Snippets</button>
 </Modal>
@@ -38,11 +41,14 @@
 
 
     public string SnippetText = "";
+    public string SnippetTitle = "";
     List<Tag> Tags = new List<Tag>();
     List<string> SelectedTags = new List<string>();
     protected async Task SaveSnippet()
     {
-        Snippet snipTest = new() { Content = SnippetText };
+        Snippet snipTest = new() { Content = SnippetText, Title = SnippetTitle};
+        snipTest.Tags = Tags.Where(tag => SelectedTags.Contains(tag.Name)).ToList();
+        Console.WriteLine(snipTest.Tags.Count());
         var client = clientFactory.CreateClient();
         var request = new HttpRequestMessage(HttpMethod.Post, "Snippets/Add");
         request.Content = JsonContent.Create(snipTest);
@@ -64,11 +70,11 @@
         var client = clientFactory.CreateClient();
         var request = new HttpRequestMessage(HttpMethod.Get, "Tags/GetAll");
         var response = await client.SendAsync(request);
-        Tags = await response.Content.ReadFromJsonAsync<List<Tag>>();
         foreach (var tag in Tags)
         {
             Console.WriteLine(tag.Name);
         }
+        Tags = await response.Content.ReadFromJsonAsync<List<Tag>>();
     }
 
     private void OnSelectionChanged(ChangeEventArgs e)
@@ -80,6 +86,7 @@
         {
             Console.WriteLine(tagA);
         }
+        Console.WriteLine(SelectedTags.Count);
     }
 
     protected async Task AddTag()
@@ -93,13 +100,19 @@
 
     private bool isModalVisible = false;
 
-    private void ShowModal()
+    private async void ShowModal()
     {
         isModalVisible = true;
+        await GetTags();
     }
 
     private void OnModalVisibilityChanged(bool visible)
     {
         isModalVisible = visible;
+    }
+
+    private async Task OnModalOpened()
+    {
+        await GetTags();
     }
 }

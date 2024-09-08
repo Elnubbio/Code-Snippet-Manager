@@ -20,10 +20,16 @@ namespace CodeSnippetManager.Controllers
         }
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add([FromBody] Snippet snippet) 
+        public async Task<IActionResult> Add([FromBody] Snippet snippet)
         {
             snippet.VisitedCount = 1;
             snippet.CreatedOn = DateTime.UtcNow;
+            if (snippet.Tags != null) {
+                foreach (Tag tag in snippet.Tags)
+                {
+                    _context.Tags.Attach(tag);
+                }
+            }
             await _context.Snippets.AddAsync(snippet);
             await _context.SaveChangesAsync();
             return Ok(snippet.Content);
@@ -42,7 +48,7 @@ namespace CodeSnippetManager.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _context.Snippets.ToListAsync());
+            return Ok(await _context.Snippets.Include(snippy => snippy.Tags).ToListAsync());
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿<!-- Modal.razor -->
-<div class="modal" style="@(IsVisible ? "display:flex" : "display:none;")"> 
+﻿@rendermode InteractiveAuto
+
+<!-- Modal.razor -->
+<div class="modal" style="@(IsVisible ? "display:flex" : "display:none;")">
     <div class="modal-content">
         <span class="close" @onclick="CloseModal">&times;</span>
         @ChildContent
@@ -7,18 +9,26 @@
 </div>
 
 @code {
-[Parameter]
-public bool IsVisible { get; set; }
+    [Parameter]
+    public bool IsVisible { get; set; }
 
-[Parameter]
-public EventCallback<bool> IsVisibleChanged { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsVisibleChanged { get; set; }
 
-[Parameter]
-public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
-private async Task CloseModal()
-{
-IsVisible = false;
-await IsVisibleChanged.InvokeAsync(IsVisible);
-}
+    [Parameter]
+    public EventCallback OnModalClosed { get; set; }
+
+    [Parameter]
+    public EventCallback OnModalOpened { get; set; }
+
+    private async Task CloseModal()
+    {
+        IsVisible = false;
+        await IsVisibleChanged.InvokeAsync(IsVisible);
+
+        await OnModalClosed.InvokeAsync();
+    }
 }
