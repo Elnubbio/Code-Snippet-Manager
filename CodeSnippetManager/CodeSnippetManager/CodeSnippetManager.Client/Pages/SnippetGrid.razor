@@ -2,38 +2,40 @@
 @using System.Net.Http.Json
 @using CodeSnippetManager.Data.Models
 @inject IHttpClientFactory clientFactory
+<AddSnippetPopup @ref="ThisSnippetPopup"/>
 
 <div class="d-flex flex-wrap overflow-auto">
-@foreach (var snippet in listOfSnippets)
-{        
-    <div class="snippet-card m-3">
-            <div class="container">
+
+    @foreach (var snippet in listOfSnippets)
+    {
+        <div class="snippet-card m-3">
+            <div class="container" @onclick="() => OpenSnippet(snippet.Id)">
                 <div class="row">
                     <div class="col-10 snippet-card-padding">
                         <span class="text-wrap flex-grow-1 text-break">@snippet.Title</span>
                     </div>
                     <div class="col-2 snippet-card-padding">
-                        <span class="close-tag" style="float:right;" @onclick="()=>DeleteSnippet(snippet.Id)">&times;</span>
+                        <span class="close-tag" style="float:right;" @onclick="() => DeleteSnippet(snippet.Id)">&times;</span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-10 snippet-card-padding">
+                    <div class="col-12 snippet-card-padding">
                         <span class="text-wrap flex-grow-1 text-break">
                             @if (snippet.Tags is not null && snippet.Tags.Any())
                             {
                                 <div class="tags-container">
-                                @foreach (var tag in snippet.Tags)
-                                {
-                                    <div class="tag">@tag.Name </div>
-                                }
+                                    @foreach (var tag in snippet.Tags)
+                                    {
+                                        <div class="tag">@tag.Name </div>
+                                    }
                                 </div>
                             }
                         </span>
                     </div>
                 </div>
             </div>
-    </div>
-}
+        </div>
+    }
 </div>
 
 @code {
@@ -47,8 +49,14 @@
     }
 
     List<Snippet> listOfSnippets { get; set; } = [];
-    
-    
+
+    public AddSnippetPopup ThisSnippetPopup;
+    public async Task OpenSnippet(int snippetId)
+    {
+        ThisSnippetPopup.GetSnippetInfo(snippetId);
+        ThisSnippetPopup.ShowModal();        
+        StateHasChanged();
+    }
     
     private async Task DeleteSnippet(int snippetId)
     {

@@ -2,14 +2,13 @@
 @inject IHttpClientFactory clientFactory
 @using CodeSnippetManager.Data.Models
 
-<button class="btn-sm btn-outline-primary" @onclick="ShowModal">Create Snippet</button>
 
 <Modal IsVisible="isModalVisible" IsVisibleChanged="OnModalVisibilityChanged" OnModalOpened="OnModalOpened">
     <h2>Code:</h2>
     <div class="pm0">
         <div class="row">
             <div>
-                <textarea @bind="SnippetTitle"></textarea>
+                <input @bind="SnippetTitle"></input>
             </div>
             <div class="col-10 d-flex">
                 <textarea @bind="SnippetText" class="" style="flex:1;"></textarea>
@@ -30,7 +29,7 @@
 
     
     <button class="btn-sm btn-outline-primary" @onclick="SaveSnippet">Save Snippet</button>
-    <button class="btn-sm btn-outline-primary" @onclick="GetSnippets">Snippets</button>
+    @* <button class="btn-sm btn-outline-primary" @onclick="GetSnippets">Snippets</button> *@
 </Modal>
 
 @code {
@@ -38,8 +37,7 @@
     {
         await GetTags();
     }
-
-
+    
     public string SnippetText = "";
     public string SnippetTitle = "";
     List<Tag> Tags = new List<Tag>();
@@ -65,6 +63,17 @@
         var content = await response.Content.ReadAsStringAsync();
         Console.WriteLine(content);
     }
+
+    public async Task GetSnippetInfo(int snippetId)
+    {
+        var client = clientFactory.CreateClient();
+        var request = new HttpRequestMessage(HttpMethod.Get, "Snippets/Get");
+        var response = await client.SendAsync(request);
+        var content = await response.Content.ReadFromJsonAsync<Snippet>();
+        SnippetTitle = content.Title;
+        SnippetText = content.Content;
+    }
+    
     protected async Task GetTags()
     {
         var client = clientFactory.CreateClient();
@@ -100,10 +109,11 @@
 
     private bool isModalVisible = false;
 
-    private async void ShowModal()
+    public async void ShowModal()
     {
         isModalVisible = true;
         await GetTags();
+        StateHasChanged();
     }
 
     private void OnModalVisibilityChanged(bool visible)

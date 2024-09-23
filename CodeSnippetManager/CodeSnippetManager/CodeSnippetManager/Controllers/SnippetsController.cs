@@ -45,6 +45,13 @@ namespace CodeSnippetManager.Controllers
             return Ok("Successfully Deleted");
         }
 
+        [HttpPost("Get")]
+        public async Task<IActionResult> Get([FromBody] int id)
+        {
+            var snippet = await _context.Snippets.FirstOrDefaultAsync(s => s.Id == id);
+            return Ok(snippet);
+        }
+        
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

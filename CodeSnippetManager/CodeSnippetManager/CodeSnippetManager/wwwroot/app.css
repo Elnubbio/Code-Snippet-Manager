@@ -139,9 +139,11 @@ h1:focus {
 .tag {
     background-color: #e2e2e2;
     border-radius: 5px;
-    padding: 5px 10px;
-    margin-right: 8px;
+    padding: 2px 2px;
+    margin-right: 4px;
+    margin-bottom: 3px;
     white-space: nowrap;
+    font-size: 0.6rem;
 }
 
 .tags-container::-webkit-scrollbar {
